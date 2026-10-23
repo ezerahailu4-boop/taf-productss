@@ -125,6 +125,8 @@ const STAGES: Stage[] = [
   },
 ];
 
+const AUTOPLAY_DELAY = 4500; // 4.5 seconds per slide for a dynamic experience
+
 export default function ScrollStory() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -155,13 +157,13 @@ export default function ScrollStory() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [prevSlide, nextSlide]);
 
-  // Subtle auto-advance every 7 seconds, pauses on hover
+  // Continuous auto-slide timer
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
       setDirection(1);
       setCurrent((prev) => (prev === STAGES.length - 1 ? 0 : prev + 1));
-    }, 7000);
+    }, AUTOPLAY_DELAY);
     return () => clearInterval(interval);
   }, [isPaused, current]);
 
@@ -171,8 +173,6 @@ export default function ScrollStory() {
     <section
       id="story"
       className="relative overflow-hidden bg-ink py-20 md:py-28"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
     >
       {/* Background Ambience */}
       <div className="bg-grid pointer-events-none absolute inset-0 opacity-20" />
@@ -193,7 +193,7 @@ export default function ScrollStory() {
             </h2>
           </div>
 
-          {/* Tab Strip with Stage Jump Buttons */}
+          {/* Tab Strip with Stage Jump Buttons & Animated Progress Fill */}
           <div className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-paper/10 bg-ink-soft/90 p-1.5 backdrop-blur-xl shadow-xl">
             {STAGES.map((s, idx) => {
               const isActive = idx === current;
@@ -201,7 +201,7 @@ export default function ScrollStory() {
                 <button
                   key={s.stageNum}
                   onClick={() => goToSlide(idx)}
-                  className={`group relative flex items-center gap-2.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all duration-300 cursor-pointer ${
+                  className={`group relative overflow-hidden flex items-center gap-2.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all duration-300 cursor-pointer ${
                     isActive
                       ? "bg-flame-500 text-ink shadow-[0_0_20px_rgba(255,122,0,0.4)]"
                       : "text-cream/70 hover:bg-paper/5 hover:text-paper"
@@ -218,10 +218,15 @@ export default function ScrollStory() {
                   <span className="hidden sm:inline font-medium tracking-wide">
                     {s.tabLabel}
                   </span>
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeTabBadge"
-                      className="h-1.5 w-1.5 rounded-full bg-ink"
+
+                  {/* Active Slide Timer Line on the Tab */}
+                  {isActive && !isPaused && (
+                    <motion.div
+                      key={`tab-progress-${current}`}
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: AUTOPLAY_DELAY / 1000, ease: "linear" }}
+                      className="absolute bottom-0 left-0 h-[2.5px] bg-ink"
                     />
                   )}
                 </button>
@@ -239,7 +244,7 @@ export default function ScrollStory() {
               initial={{ opacity: 0, x: direction * 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: direction * -50 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14"
             >
               {/* Left Column: Story Copy & Specifications (5 Cols) */}
@@ -283,7 +288,7 @@ export default function ScrollStory() {
 
                 {/* Slide Controls & Stage Indicator */}
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-paper/10 pt-5">
-                  {/* Prev / Next Arrows */}
+                  {/* Prev / Next Arrows + Auto-play toggle */}
                   <div className="flex items-center gap-2">
                     <button
                       onClick={prevSlide}
@@ -303,24 +308,55 @@ export default function ScrollStory() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
                     </button>
-                    <span className="ml-2 text-xs font-semibold text-smoke">
-                      {isPaused ? "(Paused)" : "(Auto-Advancing)"}
-                    </span>
+
+                    {/* Auto-Slide Status & Pause/Resume Toggle */}
+                    <button
+                      onClick={() => setIsPaused((prev) => !prev)}
+                      className="ml-2 flex items-center gap-2 rounded-xl border border-paper/15 bg-ink-soft/80 px-3 py-2 text-xs font-semibold text-smoke hover:text-paper hover:border-flame-500/50 transition-all cursor-pointer"
+                      title={isPaused ? "Resume auto-slide" : "Pause auto-slide"}
+                    >
+                      {!isPaused ? (
+                        <>
+                          <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-flame-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-flame-500"></span>
+                          </span>
+                          <span className="text-flame-400 font-bold">AUTO</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="h-3 w-3 text-smoke" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                          <span>PAUSED</span>
+                        </>
+                      )}
+                    </button>
                   </div>
 
-                  {/* Progress Line Bars */}
+                  {/* Progress Line Bars with Filling Animation */}
                   <div className="flex items-center gap-2">
                     {STAGES.map((_, dotIdx) => (
                       <button
                         key={dotIdx}
                         onClick={() => goToSlide(dotIdx)}
-                        className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                          dotIdx === current
-                            ? "w-10 bg-flame-500 shadow-[0_0_12px_rgba(255,122,0,0.8)]"
-                            : "w-3 bg-paper/20 hover:bg-paper/40"
-                        }`}
+                        className="relative h-2 overflow-hidden rounded-full transition-all duration-300 cursor-pointer"
+                        style={{
+                          width: dotIdx === current ? "44px" : "12px",
+                          backgroundColor: "rgba(244, 237, 226, 0.15)",
+                        }}
                         aria-label={`Go to slide ${dotIdx + 1}`}
-                      />
+                      >
+                        {dotIdx === current && (
+                          <motion.div
+                            key={`dot-progress-${current}`}
+                            initial={{ width: "0%" }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: isPaused ? 0 : AUTOPLAY_DELAY / 1000, ease: "linear" }}
+                            className="h-full bg-flame-500 shadow-[0_0_10px_rgba(255,122,0,0.8)]"
+                          />
+                        )}
+                      </button>
                     ))}
                   </div>
                 </div>
