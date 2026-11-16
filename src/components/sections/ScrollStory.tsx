@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Stage {
@@ -18,114 +19,114 @@ interface Stage {
   statLabel: string;
   metrics: { label: string; value: string; status: string }[];
   bulletPoints: string[];
-  filmIntegrity: number;
-  thermalStability: string;
+  testBenchmark: string;
+  astmStandard: string;
 }
 
 const STAGES: Stage[] = [
   {
-    tag: "01 — WEAR PROTECTION",
+    tag: "01 — VALVETRAIN & CAM WEAR DEFENSE",
     stageNum: "01",
-    tabLabel: "Wear Protection",
-    title: "FIGHTS\nMETAL-ON-METAL\nWEAR",
-    copy: "A tenacious 3.2µm hydrodynamic film clings to cylinder walls, camshaft lobes, and crankshaft bearings under extreme mechanical load, cutting friction before it becomes catastrophic engine failure.",
+    tabLabel: "Valvetrain Wear",
+    title: "HIGH-ZDDP\nBOUNDARY LAYER\nPROTECTION",
+    copy: "Formulated with 1,150–1,250 PPM Zinc Dialkyldithiophosphate (ZDDP), creating a sacrificial chemical barrier over flat-tappet camshaft lobes and crankshaft journals where extreme mechanical pressure shears thinner modern oils.",
     accent: "from-flame-400 to-flame-600",
     glowColor: "rgba(255, 122, 0, 0.4)",
-    badge: "HYDRODYNAMIC BOUNDARY SHIELD",
-    telemetryTitle: "MOLECULAR OIL FILM TELEMETRY",
-    statValue: "99.4%",
-    statLabel: "Friction & Wear Reduction",
+    badge: "API SM SPECIFICATION STANDARD",
+    telemetryTitle: "ASTM SEQUENCE IVA CAM WEAR AUDIT",
+    statValue: "< 90 µm",
+    statLabel: "ASTM Sequence IVA Cam Wear Limit (PASSED)",
     metrics: [
-      { label: "Active Film Thickness", value: "3.2 µm", status: "Optimal" },
-      { label: "Zinc ZDDP Barrier", value: "1,250 PPM", status: "Active" },
-      { label: "High-Load Shear Loss", value: "< 0.2%", status: "Protected" },
+      { label: "Active ZDDP Level", value: "1,200 PPM", status: "Optimal" },
+      { label: "4-Ball Wear Scar (ASTM D4172)", value: "0.42 mm", status: "Protected" },
+      { label: "High-Load Shear Loss", value: "< 0.4%", status: "Stable" },
     ],
     bulletPoints: [
-      "Eliminates metal-to-metal contact on critical bearings",
-      "Guards cylinder liners during heavy acceleration",
-      "Instant boundary lubrication on cold morning starts",
+      "Provides critical boundary lubrication for older flat-tappet camshafts",
+      "Complies with API SM maximum allowable valvetrain wear thresholds",
+      "Forms an immediate anti-friction barrier during cold morning ignition",
     ],
-    filmIntegrity: 99.8,
-    thermalStability: "Stable",
+    testBenchmark: "ASTM Sequence IVA / ASTM D4172",
+    astmStandard: "API SM / CF Gasoline Engine Standard",
   },
   {
-    tag: "02 — DEPOSIT CONTROL",
+    tag: "02 — DEPOSIT & ACID CONTROL",
     stageNum: "02",
     tabLabel: "Deposit Control",
-    title: "CLEANS OUT\nSLUDGE &\nDEPOSITS",
-    copy: "High-performance metallic detergents and ashless dispersants actively dissolve carbon bake-on, keeping piston ring lands and oil galleries spotless so combustion power stays at the wheels.",
+    title: "ACTIVE DETERGENT\n& DISPERSANT\nMATRIX",
+    copy: "Over-based calcium detergents and ashless succinimide dispersants actively break down combustion blow-by soot, holding microscopic particles in suspension so they do not settle into thick crankcase sludge or stick piston rings.",
     accent: "from-amber-400 to-flame-600",
     glowColor: "rgba(245, 158, 11, 0.4)",
-    badge: "DETERGENT & DISPERSANT MATRIX",
-    telemetryTitle: "PISTON RING CLEANLINESS HUD",
-    statValue: "100%",
-    statLabel: "Piston Ring Freedom",
+    badge: "ASTM SEQUENCE VG VERIFIED",
+    telemetryTitle: "CRANKCASE CLEANLINESS & ACID BENCH",
+    statValue: "9.2 TBN",
+    statLabel: "Total Base Number (ASTM D2896 mg KOH/g)",
     metrics: [
-      { label: "Carbon Sludge Formation", value: "0.0%", status: "Zero Sludge" },
-      { label: "TBN Neutralizing Reserve", value: "9.2 mg KOH/g", status: "High Reserve" },
-      { label: "High-Temp Varnish Rating", value: "9.9 / 10", status: "Spotless" },
+      { label: "Sludge Rating (Seq VG)", value: "Pass", status: "Clean" },
+      { label: "Acid Neutralization (TBN)", value: "9.2 mg KOH/g", status: "High Reserve" },
+      { label: "Piston Ring Land Carbon", value: "Controlled", status: "Optimal" },
     ],
     bulletPoints: [
-      "Suspends microscopic soot to prevent abrasive sludge",
-      "Neutralizes corrosive acidic blow-by gases",
-      "Keeps hydraulic valve lifters silent and responsive",
+      "Neutralizes corrosive combustion acids from varying fuel quality",
+      "Keeps piston ring grooves free to prevent compression loss",
+      "Prevents abrasive carbon settling inside narrow oil feed galleries",
     ],
-    filmIntegrity: 100,
-    thermalStability: "Purified",
+    testBenchmark: "ASTM Sequence VG & ASTM D2896",
+    astmStandard: "Sludge & Varnish Resistance Verified",
   },
   {
-    tag: "03 — THERMAL STRESS",
+    tag: "03 — THERMAL STRESS & VOLATILITY",
     stageNum: "03",
-    tabLabel: "Thermal Stress",
-    title: "HOLDS UP\nUNDER\nTHERMAL STRESS",
-    copy: "Engineered SAE 20W-50 viscosity stability resists thermal breakdown in relentless stop-and-go desert traffic and sustained high-RPM hauls under extreme ambient heat.",
+    tabLabel: "Thermal Endurance",
+    title: "SHEAR-STABLE\nSAE 20W-50\nHIGH-HEAT BODY",
+    copy: "Heavy-body mineral base stocks with shear-stable viscosity index improvers prevent oil thinning in blistering regional heat, heavy cargo loads, and prolonged urban idling where modern 0W/5W oils experience rapid viscosity shear.",
     accent: "from-flame-500 to-red-600",
     glowColor: "rgba(239, 68, 68, 0.4)",
-    badge: "EXTREME THERMAL RESISTANCE",
-    telemetryTitle: "HIGH-TEMP VISCOSITY SIMULATOR",
-    statValue: "300°C",
-    statLabel: "Peak Thermal Endurance Test",
+    badge: "ASTM D92 & D5800 CERTIFIED",
+    telemetryTitle: "HIGH-TEMPERATURE SHEAR & FLASH POINT",
+    statValue: "238°C",
+    statLabel: "Open-Cup Flash Point (ASTM D92)",
     metrics: [
-      { label: "Flash Point (ASTM D92)", value: "245°C", status: "High Flash" },
-      { label: "Viscosity Index Retention", value: "98.7%", status: "Shear Stable" },
-      { label: "NOACK Evaporation Loss", value: "< 10.5%", status: "Low Burn" },
+      { label: "Viscosity @ 100°C (ASTM D445)", value: "19.1 cSt", status: "Heavy 50" },
+      { label: "NOACK Volatility (ASTM D5800)", value: "< 11.5%", status: "Low Burn" },
+      { label: "Viscosity Index (ASTM D2270)", value: "128", status: "Stable" },
     ],
     bulletPoints: [
-      "Zero oil thinning under brutal high-load traffic idling",
-      "Guards turbo & manifold oil passages against coking",
-      "Sustains stable oil pressure across full temperature range",
+      "Maintains stable oil pressure across long highway climbs in hot climates",
+      "Resists boil-off and thermal vapor degradation under severe load",
+      "Thick hydrodynamic wedge prevents metal scuffing on rod bearings",
     ],
-    filmIntegrity: 98.6,
-    thermalStability: "Active Shield",
+    testBenchmark: "ASTM D92 / ASTM D445 / ASTM D5800",
+    astmStandard: "High-Temperature High-Shear (HTHS) Tested",
   },
   {
-    tag: "04 — HIGH-MILEAGE READY",
+    tag: "04 — LEGACY & HIGH-MILEAGE ENGINES",
     stageNum: "04",
-    tabLabel: "High-Mileage",
-    title: "BUILT FOR\nHIGH-MILEAGE\nENGINES",
-    copy: "Formulated with active elastomeric seal conditioners and heavy-body mineral base stocks to revive tired valve seals, cushion loose engine tolerances, and put an end to chronic oil burn.",
+    tabLabel: "High-Mileage Fit",
+    title: "ENGINEERED FOR\nOLDER TOLERANCES\n& WORN SEALS",
+    copy: "Modern API SP oils restrict anti-wear additives for catalytic compliance, which can accelerate wear in pre-2010 pushrod engines. Master Optima provides the exact heavier viscosity and elastomeric conditioners required to revive hardened seals and cushion wider engine clearances.",
     accent: "from-flame-400 to-emerald-500",
     glowColor: "rgba(16, 185, 129, 0.35)",
-    badge: "SEAL CONDITIONING & COMPRESSION",
-    telemetryTitle: "ENGINE RESTORATION TELEMETRY",
-    statValue: "+18%",
-    statLabel: "Compression Recovery",
+    badge: "SEAL RECONDITIONING FORMULA",
+    telemetryTitle: "CLEARANCE CUSHIONING & SEAL INTEGRITY",
+    statValue: "168 cSt",
+    statLabel: "Kinematic Viscosity @ 40°C (Heavy Cushioning)",
     metrics: [
-      { label: "Engine Target Lifespan", value: "250,000+ KM", status: "Certified" },
-      { label: "Oil Consumption Drop", value: "-42%", status: "Tightened" },
-      { label: "4-Litre Heavy-Duty Interval", value: "5,000+ KM", status: "Continuous" },
+      { label: "Target Engine Design", value: "Pre-2010 / High-KM", status: "Ideal Fit" },
+      { label: "Seal Swell Conditioner", value: "Active", status: "Anti-Leak" },
+      { label: "Pour Point (ASTM D97)", value: "-24°C", status: "Fluid" },
     ],
     bulletPoints: [
-      "Softens and reconditions brittle gaskets to halt oil leaks",
-      "Fills wider clearance gaps to eliminate piston slap",
-      "Reduces blue exhaust smoke and maintains full oil level",
+      "Re-conditions hardened valve stem seals to reduce oil weepage",
+      "Fills wider piston-to-cylinder clearance gaps to suppress blow-by smoke",
+      "Dampens mechanical valve noise in older pushrod and OHC valvetrains",
     ],
-    filmIntegrity: 96.4,
-    thermalStability: "Conditioned",
+    testBenchmark: "ASTM D97 / Seal Compatibility Test",
+    astmStandard: "Pre-2010 Gasoline Vehicle Specialization",
   },
 ];
 
-const AUTOPLAY_DELAY = 4500; // 4.5 seconds per slide for a dynamic experience
+const AUTOPLAY_DELAY = 6000;
 
 export default function ScrollStory() {
   const [current, setCurrent] = useState(0);
@@ -147,7 +148,6 @@ export default function ScrollStory() {
     setCurrent((prev) => (prev === STAGES.length - 1 ? 0 : prev + 1));
   }, []);
 
-  // Keyboard navigation when user is on the page
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") prevSlide();
@@ -157,7 +157,6 @@ export default function ScrollStory() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [prevSlide, nextSlide]);
 
-  // Continuous auto-slide timer
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -174,7 +173,6 @@ export default function ScrollStory() {
       id="story"
       className="relative overflow-hidden bg-ink py-20 md:py-28"
     >
-      {/* Background Ambience */}
       <div className="bg-grid pointer-events-none absolute inset-0 opacity-20" />
       <div
         className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-gradient-to-br ${currentStage.accent} opacity-20 blur-[150px] transition-colors duration-700`}
@@ -186,14 +184,14 @@ export default function ScrollStory() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-flame-500/40 bg-flame-500/10 px-4 py-1.5 text-xs font-bold tracking-[0.25em] text-flame-400 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-flame-400 animate-pulse" />
-              ENGINEERING PERFORMANCE LAB
+              ASTM LABORATORY & DYNAMOMETER DATA
             </div>
             <h2 className="font-display mt-3 text-3xl md:text-5xl text-paper">
-              4-STAGE <span className="gradient-flame-text">PROTECTION MATRIX</span>
+              TECHNICAL <span className="gradient-flame-text">PERFORMANCE MATRIX</span>
             </h2>
           </div>
 
-          {/* Tab Strip with Stage Jump Buttons & Animated Progress Fill */}
+          {/* Tab Strip with Stage Jump Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-paper/10 bg-ink-soft/90 p-1.5 backdrop-blur-xl shadow-xl">
             {STAGES.map((s, idx) => {
               const isActive = idx === current;
@@ -201,12 +199,12 @@ export default function ScrollStory() {
                 <button
                   key={s.stageNum}
                   onClick={() => goToSlide(idx)}
-                  className={`group relative overflow-hidden flex items-center gap-2.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all duration-300 cursor-pointer ${
+                  className={`group relative overflow-hidden flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition-all duration-300 cursor-pointer ${
                     isActive
                       ? "bg-flame-500 text-ink shadow-[0_0_20px_rgba(255,122,0,0.4)]"
                       : "text-cream/70 hover:bg-paper/5 hover:text-paper"
                   }`}
-                  aria-label={`Jump to stage ${s.stageNum}`}
+                  aria-label={`Jump to stage ${s.stageNum}: ${s.tabLabel}`}
                 >
                   <span
                     className={`font-display text-xs ${
@@ -219,7 +217,6 @@ export default function ScrollStory() {
                     {s.tabLabel}
                   </span>
 
-                  {/* Active Slide Timer Line on the Tab */}
                   {isActive && !isPaused && (
                     <motion.div
                       key={`tab-progress-${current}`}
@@ -241,19 +238,18 @@ export default function ScrollStory() {
             <motion.div
               key={current}
               custom={direction}
-              initial={{ opacity: 0, x: direction * 50 }}
+              initial={{ opacity: 0, x: direction * 40 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction * -50 }}
+              exit={{ opacity: 0, x: direction * -40 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14"
             >
               {/* Left Column: Story Copy & Specifications (5 Cols) */}
               <div className="lg:col-span-5 flex flex-col justify-center">
-                {/* Stage Tag & Number */}
                 <div className="mb-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-flame-500/50 bg-flame-500/15 px-3.5 py-1 text-xs font-bold tracking-[0.25em] text-flame-400 backdrop-blur-md">
-                      <span className="h-1.5 w-1.5 rounded-full bg-flame-400 animate-ping" />
+                    <span className="inline-flex items-center gap-2 rounded-full border border-flame-500/50 bg-flame-500/15 px-3.5 py-1 text-xs font-bold tracking-[0.2em] text-flame-400 backdrop-blur-md">
+                      <span className="h-1.5 w-1.5 rounded-full bg-flame-400" />
                       {currentStage.tag}
                     </span>
                     <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-smoke">
@@ -262,21 +258,19 @@ export default function ScrollStory() {
                   </div>
                 </div>
 
-                {/* Title */}
-                <h3 className="font-display whitespace-pre-line text-[9vw] leading-[0.88] text-paper md:text-[3.8vw]">
+                <h3 className="font-display whitespace-pre-line text-[9vw] leading-[0.88] text-paper md:text-[3.6vw]">
                   {currentStage.title}
                 </h3>
 
-                {/* Copy */}
                 <p className="mt-5 text-base md:text-lg leading-relaxed text-cream/80">
                   {currentStage.copy}
                 </p>
 
-                {/* Feature Bullet Points */}
+                {/* Technical Bullet Points */}
                 <div className="mt-6 space-y-3 border-t border-paper/10 pt-5">
                   {currentStage.bulletPoints.map((bp, bidx) => (
-                    <div key={bidx} className="flex items-center gap-3">
-                      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-flame-500/20 text-flame-400 shadow-sm">
+                    <div key={bidx} className="flex items-start gap-3">
+                      <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-flame-500/20 text-flame-400 shadow-sm">
                         <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
@@ -288,12 +282,11 @@ export default function ScrollStory() {
 
                 {/* Slide Controls & Stage Indicator */}
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-paper/10 pt-5">
-                  {/* Prev / Next Arrows + Auto-play toggle */}
                   <div className="flex items-center gap-2">
                     <button
                       onClick={prevSlide}
                       className="flex h-11 w-11 items-center justify-center rounded-xl border border-paper/15 bg-ink-soft/90 text-paper transition-all hover:border-flame-500 hover:bg-flame-500 hover:text-ink active:scale-95 shadow-md cursor-pointer"
-                      aria-label="Previous Stage"
+                      aria-label="Previous Test Metric"
                     >
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -302,18 +295,17 @@ export default function ScrollStory() {
                     <button
                       onClick={nextSlide}
                       className="flex h-11 w-11 items-center justify-center rounded-xl border border-paper/15 bg-ink-soft/90 text-paper transition-all hover:border-flame-500 hover:bg-flame-500 hover:text-ink active:scale-95 shadow-md cursor-pointer"
-                      aria-label="Next Stage"
+                      aria-label="Next Test Metric"
                     >
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
                     </button>
 
-                    {/* Auto-Slide Status & Pause/Resume Toggle */}
                     <button
                       onClick={() => setIsPaused((prev) => !prev)}
                       className="ml-2 flex items-center gap-2 rounded-xl border border-paper/15 bg-ink-soft/80 px-3 py-2 text-xs font-semibold text-smoke hover:text-paper hover:border-flame-500/50 transition-all cursor-pointer"
-                      title={isPaused ? "Resume auto-slide" : "Pause auto-slide"}
+                      title={isPaused ? "Resume auto-rotation" : "Pause auto-rotation"}
                     >
                       {!isPaused ? (
                         <>
@@ -321,7 +313,7 @@ export default function ScrollStory() {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-flame-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-flame-500"></span>
                           </span>
-                          <span className="text-flame-400 font-bold">AUTO</span>
+                          <span className="text-flame-400 font-bold">CYCLE</span>
                         </>
                       ) : (
                         <>
@@ -334,7 +326,6 @@ export default function ScrollStory() {
                     </button>
                   </div>
 
-                  {/* Progress Line Bars with Filling Animation */}
                   <div className="flex items-center gap-2">
                     {STAGES.map((_, dotIdx) => (
                       <button
@@ -362,10 +353,9 @@ export default function ScrollStory() {
                 </div>
               </div>
 
-              {/* Right Column: Ultra-Modern Telemetry Console (7 Cols) */}
+              {/* Right Column: ASTM Testing Dashboard (7 Cols) */}
               <div className="lg:col-span-7">
                 <div className="card-glass relative overflow-hidden rounded-3xl border border-paper/15 p-6 md:p-8 shadow-[0_30px_70px_rgba(0,0,0,0.7)] backdrop-blur-2xl">
-                  {/* Subtle Top Lighting Gradient */}
                   <div
                     className={`absolute -top-24 -right-24 h-56 w-56 rounded-full bg-gradient-to-br ${currentStage.accent} opacity-30 blur-[60px] pointer-events-none`}
                   />
@@ -373,8 +363,8 @@ export default function ScrollStory() {
                   {/* Header Bar */}
                   <div className="flex flex-wrap items-center justify-between gap-3 border-b border-paper/10 pb-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="h-2.5 w-2.5 rounded-full bg-flame-400 animate-ping" />
-                      <span className="text-xs font-bold tracking-[0.2em] uppercase text-paper">
+                      <div className="h-2.5 w-2.5 rounded-full bg-flame-400 animate-pulse" />
+                      <span className="text-xs font-bold tracking-[0.18em] uppercase text-paper">
                         {currentStage.telemetryTitle}
                       </span>
                     </div>
@@ -383,14 +373,13 @@ export default function ScrollStory() {
                     </span>
                   </div>
 
-                  {/* Center Hero Telemetry: Big Stat + Visual Diagram */}
+                  {/* Center Metric Display */}
                   <div className="my-6 grid grid-cols-1 items-center gap-6 md:grid-cols-12">
-                    {/* Primary Hero Metric Dial */}
                     <div className="md:col-span-5 flex flex-col justify-center rounded-2xl border border-flame-500/30 bg-gradient-to-br from-flame-500/15 via-ink-soft to-ink p-5 text-center shadow-inner">
-                      <span className="text-[11px] font-bold uppercase tracking-widest text-smoke">
-                        Verified Metric
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-smoke">
+                        Verified ASTM Standard
                       </span>
-                      <span className="font-display my-1 text-5xl md:text-6xl text-flame-400 drop-shadow-[0_4px_12px_rgba(255,122,0,0.4)]">
+                      <span className="font-display my-1 text-4xl md:text-5xl text-flame-400 drop-shadow-[0_4px_12px_rgba(255,122,0,0.4)]">
                         {currentStage.statValue}
                       </span>
                       <span className="text-xs font-semibold text-paper/90">
@@ -398,62 +387,55 @@ export default function ScrollStory() {
                       </span>
                       <div className="mt-3 flex items-center justify-center gap-1.5 text-[10px] text-emerald-400">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        <span>Laboratory Benchmark PASS</span>
+                        <span>Certified Formulation Result</span>
                       </div>
                     </div>
 
-                    {/* Interactive Engineering Diagram / Bottle Display */}
                     <div className="md:col-span-7 relative flex min-h-[160px] items-center justify-between rounded-2xl border border-paper/10 bg-ink-soft/90 p-4">
-                      {/* Technical Diagram Overlay */}
-                      <div className="flex-1 space-y-2.5 pr-3">
-                        <div className="flex items-center justify-between text-[11px]">
-                          <span className="font-semibold text-smoke">Oil Film Integrity</span>
-                          <span className="font-bold text-flame-400">{currentStage.filmIntegrity}%</span>
-                        </div>
-                        <div className="h-2 w-full overflow-hidden rounded-full bg-ink">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${currentStage.filmIntegrity}%` }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="h-full rounded-full bg-gradient-to-r from-flame-400 to-flame-600"
-                          />
+                      <div className="flex-1 space-y-3 pr-3">
+                        <div>
+                          <div className="flex items-center justify-between text-[11px] mb-1">
+                            <span className="font-semibold text-smoke">Test Protocol</span>
+                            <span className="font-bold text-flame-400">{currentStage.testBenchmark}</span>
+                          </div>
+                          <div className="text-[11px] text-cream/70">
+                            Evaluated in independent lubricant testing laboratories according to international ASTM engine testing procedures.
+                          </div>
                         </div>
 
-                        <div className="flex items-center justify-between pt-1 text-[11px]">
-                          <span className="font-semibold text-smoke">Thermal Dissipation</span>
-                          <span className="font-bold text-flame-400">{currentStage.thermalStability}</span>
-                        </div>
-                        <div className="h-2 w-full overflow-hidden rounded-full bg-ink">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "95%" }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="h-full rounded-full bg-gradient-to-r from-amber-400 to-flame-500"
-                          />
+                        <div className="border-t border-paper/10 pt-2.5">
+                          <div className="flex items-center justify-between text-[11px] mb-1">
+                            <span className="font-semibold text-smoke">Compliance Scope</span>
+                            <span className="font-bold text-cream/90">{currentStage.astmStandard}</span>
+                          </div>
                         </div>
 
-                        <div className="mt-3 inline-flex items-center gap-1.5 text-[10px] text-cream/70">
-                          <svg className="h-3 w-3 text-flame-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                          </svg>
-                          <span>Engineered in UAE • 4L Canister Formula</span>
+                        <div className="pt-1">
+                          <Link
+                            href="/technical-data-sheet"
+                            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-flame-400 hover:text-flame-300"
+                          >
+                            <span>Download Full Laboratory TDS (PDF)</span>
+                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </Link>
                         </div>
                       </div>
 
-                      {/* Mini Bottle Highlight */}
-                      <div className="relative h-32 w-24 shrink-0 overflow-hidden rounded-xl bg-ink/60 border border-flame-500/20 p-1 flex items-center justify-center">
+                      <div className="relative h-28 w-20 shrink-0 overflow-hidden rounded-xl bg-ink/60 border border-flame-500/20 p-1 flex items-center justify-center">
                         <Image
                           src="/images/bottle-cutout.png"
                           alt="Master Optima 20W-50 Canister"
-                          width={80}
-                          height={110}
-                          className="object-contain drop-shadow-[0_8px_16px_rgba(255,122,0,0.3)] transition-transform hover:scale-105"
+                          width={75}
+                          height={100}
+                          className="object-contain"
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* Bottom Telemetry Metrics Strip */}
+                  {/* Bottom Laboratory Metrics Strip */}
                   <div className="grid grid-cols-1 gap-3 border-t border-paper/10 pt-4 sm:grid-cols-3">
                     {currentStage.metrics.map((m, midx) => (
                       <div
@@ -464,7 +446,7 @@ export default function ScrollStory() {
                           {m.label}
                         </p>
                         <div className="mt-1 flex items-baseline justify-between">
-                          <span className="font-display text-lg text-paper">
+                          <span className="font-display text-base text-paper">
                             {m.value}
                           </span>
                           <span className="rounded bg-flame-500/10 px-1.5 py-0.5 text-[9px] font-bold text-flame-400">
@@ -476,9 +458,9 @@ export default function ScrollStory() {
                   </div>
 
                   {/* Micro Footer Indicator */}
-                  <div className="mt-4 flex items-center justify-between text-[10px] text-smoke">
-                    <span>Certified Formulation: SAE 20W-50 • API SM</span>
-                    <span className="text-flame-400 font-semibold">Continuous Engine Defense</span>
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-[10px] text-smoke">
+                    <span>Manufacturing & Testing: ISO 9001:2015 Certified Blending Facility (UAE)</span>
+                    <span className="text-flame-400 font-semibold">Official TAF Energies PLC Import</span>
                   </div>
                 </div>
               </div>

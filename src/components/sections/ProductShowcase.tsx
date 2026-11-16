@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const HOTSPOTS = [
@@ -131,10 +132,18 @@ export default function ProductShowcase() {
                 <span className="text-[10px] font-bold tracking-widest uppercase text-flame-400">
                   {currentHotspot.tag}
                 </span>
-                <span className="text-[10px] text-smoke">Click dots on bottle to explore</span>
+                <span className="text-[10px] text-smoke">Click points on canister to inspect</span>
               </div>
               <h4 className="mt-1.5 font-display text-lg text-paper">{currentHotspot.title}</h4>
               <p className="mt-1 text-xs leading-relaxed text-cream/70">{currentHotspot.desc}</p>
+              <div className="mt-3 pt-3 border-t border-paper/10 flex items-center justify-between text-xs">
+                <Link href="/technical-data-sheet" className="text-flame-400 font-semibold hover:underline">
+                  View Canister Spec in TDS &rarr;
+                </Link>
+                <Link href="/#contact" className="text-smoke hover:text-paper">
+                  Wholesale Carton Info
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -167,6 +176,7 @@ export default function ProductShowcase() {
                     key={hotspot.id}
                     onClick={() => setActiveHotspot(hotspot.id)}
                     style={{ top: hotspot.top, left: hotspot.left }}
+                    aria-label={`Inspect ${hotspot.title}`}
                     className={`group absolute -translate-x-1/2 -translate-y-1/2 z-20 flex items-center gap-2 rounded-full p-1.5 transition-all duration-300 ${
                       isSelected
                         ? "bg-flame-500 text-ink shadow-[0_0_25px_rgba(255,122,0,0.9)] scale-110"

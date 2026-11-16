@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 
 const HeroScene = dynamic(() => import("@/components/scene/HeroScene"), {
@@ -34,8 +35,8 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[100svh] w-full overflow-hidden bg-noise-dark bg-grid"
     >
-      {/* Background 3D scene */}
-      <div className="absolute inset-0 opacity-80">
+      {/* Background 3D scene with error boundary / graceful canvas */}
+      <div className="absolute inset-0 opacity-75">
         <HeroScene />
       </div>
 
@@ -45,15 +46,20 @@ export default function Hero() {
       <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col items-center justify-center px-6 pt-24 pb-12 md:flex-row md:gap-10 md:pt-16">
         {/* Copy */}
         <div className="order-2 w-full md:order-1 md:w-1/2">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-flame-500/40 bg-flame-500/10 px-4 py-1.5 text-xs font-bold tracking-[0.25em] text-flame-400"
+            className="mb-4 flex flex-wrap items-center gap-2"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-flame-400 animate-pulse" />
-            MADE IN UAE &middot; 4 LITRE &middot; SM GRADE
-          </motion.p>
+            <span className="inline-flex items-center gap-2 rounded-full border border-flame-500/40 bg-flame-500/10 px-3.5 py-1.5 text-xs font-bold tracking-[0.2em] text-flame-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-flame-400 animate-pulse" />
+              MADE IN UAE &middot; 4 LITRE CANISTER
+            </span>
+            <span className="rounded-full border border-paper/15 bg-ink/70 px-3 py-1 text-[11px] font-semibold text-cream/70">
+              TAF Energies PLC Distribution
+            </span>
+          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -70,14 +76,14 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-4 flex items-baseline gap-3"
+            className="mt-4 flex flex-wrap items-baseline gap-3"
           >
             <span className="font-display text-3xl text-flame-500 md:text-4xl">
               20W-50
             </span>
             <span className="h-2 w-2 rounded-full bg-flame-500" />
-            <span className="text-sm font-semibold uppercase tracking-[0.3em] text-smoke">
-              Gasoline Engine Oil
+            <span className="text-sm font-semibold uppercase tracking-[0.25em] text-smoke">
+              API SM / CF Gasoline Engine Oil
             </span>
           </motion.div>
 
@@ -85,11 +91,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="mt-6 max-w-md text-balance text-lg leading-relaxed text-cream/80"
+            className="mt-5 max-w-lg text-balance text-base md:text-lg leading-relaxed text-cream/80"
           >
-            Premium multi-grade protection engineered for older and
-            high-mileage gasoline engines. Built to fight wear, deposits, and
-            thermal breakdown — mile after relentless mile.
+            Engineered specifically for pre-2010 models, classic carbureted designs, and high-mileage gasoline engines operating in high-heat African conditions. Formulated with robust ZDDP anti-wear reserves and shear-stable viscosity to maintain hydrodynamic film strength where modern thin oils fail.
           </motion.p>
 
           <motion.div
@@ -99,17 +103,23 @@ export default function Hero() {
             className="mt-8 flex flex-wrap items-center gap-4"
           >
             <a
-              href="#specs"
+              href="#contact"
               className="btn-flame group relative rounded-full px-8 py-4 font-display text-sm tracking-wider text-ink shadow-[0_8px_30px_rgba(255,122,0,0.35)] transition-transform hover:scale-[1.03] active:scale-95"
             >
-              EXPLORE THE OIL
+              FIND A DEALER / BUY NOW
             </a>
             <a
-              href="#find"
-              className="rounded-full border border-paper/25 px-8 py-4 font-display text-sm tracking-wider text-paper transition-colors hover:border-flame-400 hover:text-flame-300"
+              href="#specs"
+              className="rounded-full border border-paper/25 px-7 py-4 font-display text-sm tracking-wider text-paper transition-colors hover:border-flame-400 hover:text-flame-300"
             >
-              WHERE TO BUY
+              WHY API SM SPEC
             </a>
+            <Link
+              href="/technical-data-sheet"
+              className="text-xs font-semibold uppercase tracking-wider text-flame-400 hover:underline px-2"
+            >
+              View TDS &rarr;
+            </Link>
           </motion.div>
 
           {/* Quick Credential Badges */}
@@ -117,19 +127,19 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.75 }}
-            className="mt-8 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs text-smoke"
+            className="mt-8 flex flex-wrap items-center gap-y-2.5 gap-x-5 text-xs text-smoke border-t border-paper/10 pt-4"
           >
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              100% Genuine UAE Import
+              UAE Blended (ISO 9001 Facility)
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-flame-400" />
-              API SM / CF Gasoline Spec
+              ASTM D4172 & D6891 Tested
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-flame-400" />
-              4 Litre Sump Volume
+              Direct TAF Energies Import
             </span>
           </motion.div>
         </div>
@@ -158,7 +168,10 @@ export default function Hero() {
             className="card-glass absolute top-8 -right-2 z-20 hidden md:flex items-center gap-2 rounded-xl px-4 py-2 shadow-xl border border-flame-500/30"
           >
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[11px] font-bold tracking-wider text-paper uppercase">4 Litres Net</span>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-flame-400 uppercase tracking-wider">4.0 Litres Sump Volume</span>
+              <span className="text-[11px] font-semibold text-paper">Sealed Induction Cap</span>
+            </div>
           </motion.div>
 
           {/* Floating Bottom Badge */}
@@ -169,8 +182,8 @@ export default function Hero() {
           >
             <span className="text-base">🇦🇪</span>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-flame-400 uppercase tracking-wider">Engineered in UAE</span>
-              <span className="text-[11px] font-semibold text-paper">Certified Origin</span>
+              <span className="text-[10px] font-bold text-flame-400 uppercase tracking-wider">Origin Verified</span>
+              <span className="text-[11px] font-semibold text-paper">Blended & Packaged in UAE</span>
             </div>
           </motion.div>
 
@@ -180,7 +193,7 @@ export default function Hero() {
           >
             <Image
               src="/images/bottle-cutout.png"
-              alt="TAF Energies Master Optima 20W-50 SM gasoline engine oil, 4 litre bottle"
+              alt="TAF Energies Master Optima 20W-50 SM gasoline engine oil, 4 litre canister"
               fill
               priority
               sizes="(max-width: 768px) 72vw, 34vw"
@@ -197,16 +210,18 @@ export default function Hero() {
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-center"
       >
-        <div className="mx-auto h-10 w-6 rounded-full border border-paper/30 p-1">
-          <motion.div
-            animate={{ y: [0, 14, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="h-2 w-full rounded-full bg-flame-400"
-          />
-        </div>
-        <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-smoke">
-          Scroll
-        </p>
+        <a href="#story" className="group flex flex-col items-center">
+          <div className="mx-auto h-10 w-6 rounded-full border border-paper/30 p-1 group-hover:border-flame-400 transition-colors">
+            <motion.div
+              animate={{ y: [0, 14, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              className="h-2 w-full rounded-full bg-flame-400"
+            />
+          </div>
+          <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-smoke group-hover:text-flame-400 transition-colors">
+            Scroll to ASTM Standards
+          </p>
+        </a>
       </motion.div>
     </section>
   );
